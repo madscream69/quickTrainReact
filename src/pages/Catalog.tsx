@@ -5,12 +5,28 @@ import MovieTableVirtual from "../components/MovieTableVirtual.tsx";
 import MovieListWindow from "../components/MovieListWindow.tsx";
 
 function Catalog() {
+    const [searchText, setSearchText] = useState('')
     const { data: movies = [], isLoading } = useGetMoviesQuery();
+    const [filteredMovies, setFilteredMovies] = useState([])
     const [activeTab, setActiveTab] = useState<'list' | 'table'>('table');
     if (isLoading) return <h2>Загрузка 10 000 фильмов...</h2>;
+
+    function filteredMoviesByYear(year:number) {
+        return movies.filter((movie) => movie.year === year)
+    }
+
     return (
         <div>
             <h1>Каталог фильмов ({movies.length} шт.)</h1>
+
+
+            <label>
+                Поиск по годам:
+                <input value={searchText} onChange={(e) => {
+                    setSearchText(e.target.value);
+                    setFilteredMovies(filteredMoviesByYear(+e.target.value))
+                }} />
+            </label>
 
             {/* Табы */}
             <div style={{ marginBottom: '20px' }}>
@@ -24,10 +40,10 @@ function Catalog() {
                 </button>
             </div>
 
-            {activeTab === 'table' && <MovieTableVirtual movies={movies} />}
+            {activeTab === 'table' && <MovieTableVirtual movies={filteredMovies.length === 0 ? movies : filteredMovies} />}
              {activeTab === 'list' && <MovieListWindow movies={movies} />}
         </div>
     );
 }
-
+// добавить реакт мема
 export default Catalog;

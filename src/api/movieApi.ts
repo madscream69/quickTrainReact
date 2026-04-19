@@ -1,5 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import {fakeBaseQuery} from "@reduxjs/toolkit/query";
+import {defaultKeyExtractor} from "@tanstack/react-virtual";
 
 // Генерируем 10 000 фильмов один раз (для теста)
 const generateMovies = () => {
@@ -32,7 +33,13 @@ export const movieApi = createApi({
                 return { data: movie };
             },
         }),
+        getMoviesByYear: builder.query({
+            queryFn: (year: number) => {
+                const movies = moviesCache.filter((m) => m.year === year);
+                return { data: movies };
+            },
+        }),
     }),
 });
 
-export const { useGetMoviesQuery, useGetMovieByIdQuery } = movieApi;
+export const { useGetMoviesQuery, useGetMovieByIdQuery, useGetMoviesByYearQuery } = movieApi;

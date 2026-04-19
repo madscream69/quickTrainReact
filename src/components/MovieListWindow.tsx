@@ -1,4 +1,5 @@
 import { List, type RowComponentProps } from 'react-window';
+import {Link} from "react-router-dom";
 
 type Movie = {
     id: string;
@@ -29,7 +30,7 @@ function MovieListWindow({ movies }: Props) {
                     }}
                 >
                     <div style={{ width: 60 }}>{movie.id}</div>
-                    <div style={{ flex: 1, fontWeight: 500 }}>{movie.title}</div>
+                    <div style={{ flex: 1, fontWeight: 500 }}><Link to={`/movie/${movie.id}`}>{movie.title}</Link></div>
                     <div style={{ width: 80 }}>{movie.year}</div>
                     <div style={{ width: 100 }}>{movie.genre}</div>
                     <div

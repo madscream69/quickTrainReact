@@ -1,5 +1,6 @@
 import {useRef} from "react";
 import {useVirtualizer} from "@tanstack/react-virtual";
+import {Link} from "react-router-dom";
 
 
 type Movie = {
@@ -12,7 +13,7 @@ type Movie = {
 type Props = {
     movies: Movie[]
 }
-function MovieTableVirtual({movies}:Props) {
+const MovieTableVirtual = ({movies}:Props)=> {
     const parentRef = useRef<HTMLDivElement>(null);
     const rowVirtualizer = useVirtualizer({
         count: movies.length,
@@ -53,7 +54,7 @@ function MovieTableVirtual({movies}:Props) {
                             >
                                 <div style={{ display: 'grid', gridTemplateColumns: '50px 1fr 100px 100px 80px', borderBottom: '1px solid #ccc' }}>
                                     <div>{movie.id}</div>
-                                    <div>{movie.title}</div>
+                                    <Link to={`/movie/${movie.id}`}>{movie.title}</Link>
                                     <div>{movie.year}</div>
                                     <div>{movie.genre}</div>
                                     <div>{movie.rating}</div>
