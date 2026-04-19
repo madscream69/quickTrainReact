@@ -1,26 +1,25 @@
-import {useRef} from "react";
-import {useVirtualizer} from "@tanstack/react-virtual";
-import {Link} from "react-router-dom";
-
+import { useRef } from 'react';
+import { useVirtualizer } from '@tanstack/react-virtual';
+import { Link } from 'react-router-dom';
 
 type Movie = {
-    id: string,
-    title: string,
-    year: number,
-    genre: string,
-    rating: number
-}
+    id: string;
+    title: string;
+    year: number;
+    genre: string;
+    rating: number;
+};
 type Props = {
-    movies: Movie[]
-}
-const MovieTableVirtual = ({movies}:Props)=> {
+    movies: Movie[];
+};
+const MovieTableVirtual = ({ movies }: Props) => {
     const parentRef = useRef<HTMLDivElement>(null);
     const rowVirtualizer = useVirtualizer({
         count: movies.length,
         getScrollElement: () => parentRef.current,
         estimateSize: () => 50,
         overscan: 5,
-    })
+    });
     return (
         <div>
             <div
@@ -52,20 +51,29 @@ const MovieTableVirtual = ({movies}:Props)=> {
                                     transform: `translateY(${virtualItem.start}px)`,
                                 }}
                             >
-                                <div style={{ display: 'grid', gridTemplateColumns: '50px 1fr 100px 100px 80px', borderBottom: '1px solid #ccc' }}>
+                                <div
+                                    style={{
+                                        display: 'grid',
+                                        gridTemplateColumns:
+                                            '50px 1fr 100px 100px 80px',
+                                        borderBottom: '1px solid #ccc',
+                                    }}
+                                >
                                     <div>{movie.id}</div>
-                                    <Link to={`/movie/${movie.id}`}>{movie.title}</Link>
+                                    <Link to={`/movie/${movie.id}`}>
+                                        {movie.title}
+                                    </Link>
                                     <div>{movie.year}</div>
                                     <div>{movie.genre}</div>
                                     <div>{movie.rating}</div>
                                 </div>
                             </div>
-                        )
+                        );
                     })}
                 </div>
             </div>
         </div>
     );
-}
-
+};
+// доработать row,  бошка не варит уже
 export default MovieTableVirtual;
